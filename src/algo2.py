@@ -2,6 +2,7 @@ from __future__ import division
 import csv
 import sys
 import operator
+import random
 
 filename="../proximityedgestimestamps.csv"
 
@@ -41,7 +42,7 @@ class DEVICE:
 def main():
 
 	if(len(sys.argv)<4):
-		print("Use: <script_name> <Top_S%> <Bottom_L%> <Transmission_Prob_to_super_nodes>")
+		print("Use: <script_name> <Top_S%> <Bottom_L%> <Transmission_Prob_to_super_nodes(%)>")
 		exit(0)
 
 	devices={}
@@ -152,9 +153,16 @@ def main():
 			device_id1=int(row[1])
 			device_id2=int(row[2])
 			
+# Device 1 transmission
 			for chunk in devices[device_id1].to_forward:
 				chunks=devices[device_id1].to_forward[chunk]
 
+				rand_int=random.randint(0,101)
+
+				if(device_category[device_id2]==1 and rand_int>TP):
+					continue
+				if(device_category[device_id2]==2 and rand_int>(100-TP)):
+					continue
 				if(devices[device_id2].has_data(chunks[0])==False):
 					devices[device_id2].receive_data(chunks[0],devices[device_id1])
 					brodcasted_to=brodcasted_to+1
@@ -170,8 +178,13 @@ def main():
 				break
 			devices[device_id1].update_forwarding(K)
 
+#Device 2 transmission
 			for chunk in devices[device_id2].to_forward:
 				chunks=devices[device_id2].to_forward[chunk]
+				if(device_category[device_id1]==1 and rand_int>TP):
+					continue
+				if(device_category[device_id1]==2 and rand_int>(100-TP)):
+					continue				
 
 				if(devices[device_id1].has_data(chunks[0])==False):
 					devices[device_id1].receive_data(chunks[0],devices[device_id2])
@@ -191,7 +204,7 @@ def main():
 		if(flag==False):
 			print K,",","Reached only(in %):",(brodcasted_to/device_count)*100
 
-		print "[Super,Ordinary,Weak]:",transmission_list
+		print "TransmissionsCount by [Super,Ordinary,Weak]:",transmission_list
 
 
 
