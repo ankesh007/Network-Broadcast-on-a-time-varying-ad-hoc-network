@@ -40,18 +40,19 @@ class DEVICE:
 
 def main():
 
-	if(len(sys.argv)<5):
-		print("Use: <script_name> <Parameter_K> <Top_S%> <Bottom_L%> <Transmission_Prob>")
+	if(len(sys.argv)<4):
+		print("Use: <script_name> <Top_S%> <Bottom_L%> <Transmission_Prob_to_super_nodes>")
 		exit(0)
 
 	devices={}
 	device_neighbour_set={}
 	brodcasted_to=0
 
-	K=int(sys.argv[1])
-	S=float(sys.argv[2])/100
-	L=float(sys.argv[3])/100
-	TP=float(sys.argv[4])/100
+	# K=int(sys.argv[1])
+	K=20000
+	S=float(sys.argv[1])/100
+	L=float(sys.argv[2])/100
+	TP=float(sys.argv[3])/100
 	percent_check=0.9
 
 	data_generated_at=26
@@ -138,6 +139,7 @@ def main():
 	devices[data_generated_at]=device_with_data
 	flag=False
 
+	transmission_list=[0,0,0]
 
 	with open(filename,'rb') as csvfile:
 		trace=csv.reader(csvfile,delimiter=';')
@@ -149,6 +151,7 @@ def main():
 			time_stamp=int(row[0])
 			device_id1=int(row[1])
 			device_id2=int(row[2])
+			
 			for chunk in devices[device_id1].to_forward:
 				chunks=devices[device_id1].to_forward[chunk]
 
@@ -156,6 +159,7 @@ def main():
 					devices[device_id2].receive_data(chunks[0],devices[device_id1])
 					brodcasted_to=brodcasted_to+1
 					devices[device_id1].to_forward[chunks[0].id]=(chunks[0],chunks[1]+1)
+					transmission_list[device_category[device_id1]-1]=transmission_list[device_category[device_id1]-1]+1
 					# print brodcasted_to," ",device_id1," ",device_id2 
 					if(brodcasted_to>=device_count*percent_check):
 						print K,",""Time:",time_stamp
@@ -173,7 +177,8 @@ def main():
 					devices[device_id1].receive_data(chunks[0],devices[device_id2])
 					brodcasted_to=brodcasted_to+1
 					devices[device_id2].to_forward[chunks[0].id]=(chunks[0],chunks[1]+1)
-					# print brodcasted_to," ",device_id2," ",device_id1
+					transmission_list[device_category[device_id2]-1]=transmission_list[device_category[device_id2]-1]+1
+				# print brodcasted_to," ",device_id2," ",device_id1
 					if(brodcasted_to>=device_count*percent_check):
 						print K,",""Time:",time_stamp
 						flag=True
@@ -185,6 +190,8 @@ def main():
 
 		if(flag==False):
 			print K,",","Reached only(in %):",(brodcasted_to/device_count)*100
+
+		print "[Super,Ordinary,Weak]:",transmission_list
 
 
 
