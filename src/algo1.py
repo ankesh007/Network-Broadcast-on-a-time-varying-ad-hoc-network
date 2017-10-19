@@ -1,10 +1,9 @@
 from __future__ import division
 import csv
+import sys
 
-filename="proximityedgestimestamps.csv"
+filename="../proximityedgestimestamps.csv"
 
-devices={}
-brodcasted_to=0
 
 class DATA:
 	def __init__(self,id):
@@ -40,27 +39,24 @@ class DEVICE:
 
 def main():
 
+	if(len(sys.argv)<2):
+		print("Use: <script_name> <Parameter_K>")
+		exit(0)
+
+	devices={}
+	brodcasted_to=0
+
 	data_generated_at=26
-	K=40
+	K=int(sys.argv[1])
 	percent_check=0.9
 	start_time=0
 
-
-	data_id=str(data_generated_at)+"_0" 
-	#convention that data_id for generated data is <device_id>_<brodcast_count>
-	data=DATA(data_id)
-	device_with_data=DEVICE(data_generated_at)
-	device_with_data.to_forward[data_id]=(data,0)
-	devices[data_generated_at]=device_with_data
 	device_count=1
-	flag=False
-
 	with open(filename,'rb') as csvfile:
 		trace=csv.reader(csvfile,delimiter=';')
 
 		for row in trace:
 			if(len(row)<3):
-				print row
 				continue
 			device_id1=int(row[1])
 			device_id2=int(row[2])
@@ -76,6 +72,16 @@ def main():
 			else:
 				devices[device_id2]=DEVICE(device_id2)
 				device_count=device_count+1
+	
+
+	data_id=str(data_generated_at)+"_0" 
+	#convention that data_id for generated data is <device_id>_<brodcast_count>
+	data=DATA(data_id)
+	device_with_data=DEVICE(data_generated_at)
+	device_with_data.to_forward[data_id]=(data,0)
+	devices[data_generated_at]=device_with_data
+	flag=False
+
 
 	with open(filename,'rb') as csvfile:
 		trace=csv.reader(csvfile,delimiter=';')
@@ -92,16 +98,16 @@ def main():
 
 				if(devices[device_id2].has_data(chunks[0])==False):
 					devices[device_id2].receive_data(chunks[0],devices[device_id1])
-					global brodcasted_to
 					brodcasted_to=brodcasted_to+1
 					devices[device_id1].to_forward[chunks[0].id]=(chunks[0],chunks[1]+1)
-					print brodcasted_to," ",device_id1," ",device_id2 
-
+					# print brodcasted_to," ",device_id1," ",device_id2 
 					if(brodcasted_to>=device_count*percent_check):
-						print time_stamp
+						print K,",""Time:",time_stamp
 						flag=True
 						break
 
+			if(flag==True):
+				break
 			devices[device_id1].update_forwarding(K)
 
 			for chunk in devices[device_id2].to_forward:
@@ -109,19 +115,20 @@ def main():
 
 				if(devices[device_id1].has_data(chunks[0])==False):
 					devices[device_id1].receive_data(chunks[0],devices[device_id2])
-					global brodcasted_to
 					brodcasted_to=brodcasted_to+1
 					devices[device_id2].to_forward[chunks[0].id]=(chunks[0],chunks[1]+1)
-					print brodcasted_to," ",device_id2," ",device_id1
+					# print brodcasted_to," ",device_id2," ",device_id1
 					if(brodcasted_to>=device_count*percent_check):
-						print time_stamp
+						print K,",""Time:",time_stamp
 						flag=True
-						break					 
-
+						break
+			
+			if(flag==True):
+				break
 			devices[device_id2].update_forwarding(K)
 
 		if(flag==False):
-			print "Reached only: ",(brodcasted_to/device_count)*100
+			print K,",","Reached only(in %):",(brodcasted_to/device_count)*100
 
 
 
