@@ -39,15 +39,15 @@ class DEVICE:
 
 def main():
 
-	if(len(sys.argv)<2):
-		print("Use: <script_name> <Parameter_K>")
+	if(len(sys.argv)<3):
+		print("Use: <script_name> <Parameter_K> <Source_node>")
 		exit(0)
 
 	devices={}
 	brodcasted_to=0
 
-	data_generated_at=26
 	K=int(sys.argv[1])
+	data_generated_at=int(sys.argv[2])
 	percent_check=0.9
 	start_time=0
 

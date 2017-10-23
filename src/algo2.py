@@ -41,8 +41,8 @@ class DEVICE:
 
 def main():
 
-	if(len(sys.argv)<4):
-		print("Use: <script_name> <Top_S%> <Bottom_L%> <Transmission_Prob_to_super_nodes(%)>")
+	if(len(sys.argv)<5):
+		print("Use: <script_name> <Top_S%> <Bottom_L%> <Transmission_Prob_to_super_nodes(%)> <Transmission_Prob_to_Oridinary_nodes(%)> <Source_Node>")
 		exit(0)
 
 	devices={}
@@ -53,10 +53,12 @@ def main():
 	K=20000
 	S=float(sys.argv[1])/100
 	L=float(sys.argv[2])/100
-	TP=float(sys.argv[3])/100
+	TP=float(sys.argv[3])
+	TPO=float(sys.argv[4])
+
 	percent_check=0.9
 
-	data_generated_at=26
+	data_generated_at=int(sys.argv[5])
 	start_time=0
 	device_count=0
 
@@ -161,7 +163,7 @@ def main():
 
 				if(device_category[device_id2]==1 and rand_int>TP):
 					continue
-				if(device_category[device_id2]==2 and rand_int>(100-TP)):
+				if(device_category[device_id2]==2 and rand_int>TPO):
 					continue
 				if(devices[device_id2].has_data(chunks[0])==False):
 					devices[device_id2].receive_data(chunks[0],devices[device_id1])
@@ -183,7 +185,7 @@ def main():
 				chunks=devices[device_id2].to_forward[chunk]
 				if(device_category[device_id1]==1 and rand_int>TP):
 					continue
-				if(device_category[device_id1]==2 and rand_int>(100-TP)):
+				if(device_category[device_id1]==2 and rand_int>TPO):
 					continue				
 
 				if(devices[device_id1].has_data(chunks[0])==False):
