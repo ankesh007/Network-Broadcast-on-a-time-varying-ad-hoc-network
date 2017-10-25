@@ -9,7 +9,7 @@ import numpy as np
 file_percent = open("26_percent.csv",'w')
 file_time = open("26_time.csv",'w')
 
-for j in range(1,100):		# set range(100)
+for j in range(1,100):		# set range(1,100)
 	x = subprocess.check_output(["python", "algo1a.py", str(j), str(26) ])
 	# print x
 	y = x.split()
@@ -48,11 +48,11 @@ file_time = open("avg_time.csv",'w')
 
 start_nodes = []
 
-for j in range(100):
+for j in range(100):	# set range(100)
 	x = random.randint(0,total-1)
-	start_nodes.append(x)
+	start_nodes.append(device_list[x])
 
-for k in range(1,100):
+for k in range(1,100):	# set range(1,100)
 
 	# count_percent = 0
 	# count_time = 0
@@ -80,3 +80,5 @@ for k in range(1,100):
 
 file_percent.close()
 file_time.close()	
+
+# Find mean using sum/count
