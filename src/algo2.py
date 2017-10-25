@@ -203,6 +203,9 @@ def main():
 		if(flag==False):
 			print "Reached only(in %):",(brodcasted_to/device_count)*100
 
+		transmission_list[0]=transmission_list[0]/super_node_count
+		transmission_list[2]=transmission_list[2]/weakly_connected_node_count
+		transmission_list[1]=transmission_list[1]/(device_count-super_node_count-weakly_connected_node_count)
 		print "TransmissionsCount by [Super,Ordinary,Weak]:",transmission_list
 
 
