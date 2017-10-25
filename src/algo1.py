@@ -80,6 +80,7 @@ def main():
 	device_with_data=DEVICE(data_generated_at)
 	device_with_data.to_forward[data_id]=(data,0)
 	devices[data_generated_at]=device_with_data
+	devices[data_generated_at].update_forwarding(K)
 	flag=False
 
 
