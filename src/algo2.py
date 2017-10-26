@@ -3,6 +3,7 @@ import csv
 import sys
 import operator
 import random
+import numpy as np
 
 filename="../proximityedgestimestamps.csv"
 
@@ -47,6 +48,7 @@ def main():
 
 	devices={}
 	device_neighbour_set={}
+	device_broadcast_count={}
 	brodcasted_to=0
 
 	S=float(sys.argv[1])/100
@@ -77,6 +79,7 @@ def main():
 			else:
 				devices[device_id1]=DEVICE(device_id1)
 				device_count=device_count+1
+				device_broadcast_count[device_id1]=0
 				device_neighbour_set[device_id1]=set()
 				device_neighbour_set[device_id1].add(device_id2)
 
@@ -86,6 +89,7 @@ def main():
 			else:
 				devices[device_id2]=DEVICE(device_id2)
 				device_count=device_count+1
+				device_broadcast_count[device_id2]=0
 				device_neighbour_set[device_id2]=set()
 				device_neighbour_set[device_id2].add(device_id1)
 
@@ -168,6 +172,7 @@ def main():
 					brodcasted_to=brodcasted_to+1
 					devices[device_id1].to_forward[chunks[0].id]=(chunks[0],chunks[1]+1)
 					transmission_list[device_category[device_id1]-1]=transmission_list[device_category[device_id1]-1]+1
+					device_broadcast_count[device_id1]=device_broadcast_count[device_id1]+1
 					# print brodcasted_to," ",device_id1," ",device_id2 
 					if(brodcasted_to>=device_count*percent_check):
 						print "Time:",time_stamp
@@ -191,6 +196,8 @@ def main():
 					brodcasted_to=brodcasted_to+1
 					devices[device_id2].to_forward[chunks[0].id]=(chunks[0],chunks[1]+1)
 					transmission_list[device_category[device_id2]-1]=transmission_list[device_category[device_id2]-1]+1
+					device_broadcast_count[device_id2]=device_broadcast_count[device_id2]+1
+
 				# print brodcasted_to," ",device_id2," ",device_id1
 					if(brodcasted_to>=device_count*percent_check):
 						print "Time:",time_stamp
@@ -208,6 +215,19 @@ def main():
 		transmission_list[1]=transmission_list[1]/(device_count-super_node_count-weakly_connected_node_count)
 		print "TransmissionsCount by [Super,Ordinary,Weak]:",transmission_list
 
+	device_broacast_list=[]
+
+	for elements in device_broadcast_count:
+		device_broacast_list.append(device_broadcast_count[elements])
+
+	# print (device_broacast_list)
+
+	np_arr=np.asarray(device_broacast_list)
+
+	pair_wise_diff_sum=np.sum(np.abs(np_arr[:,np.newaxis]-np_arr))
+	linear_sum=np.sum(np_arr)
+
+	print (pair_wise_diff_sum/(2*device_count*(0.00000001+linear_sum)))
 
 
 if __name__=="__main__":
