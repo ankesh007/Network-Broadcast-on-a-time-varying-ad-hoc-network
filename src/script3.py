@@ -57,7 +57,7 @@ for j in range(100):
 	x = random.randint(0,total-1)
 	start_nodes.append(device_list[x])
 
-for x in range(1,100,10):		# set range(1,100)
+for x in range(0,101):		# set range(0,101)
 
 	# count_percent = 0
 	# count_time = 0
@@ -68,7 +68,7 @@ for x in range(1,100,10):		# set range(1,100)
 	percents = []
 	ginny = []
 
-	for j in range(10):		# set range(100)
+	for j in range(100):		# set range(100)
 		z = subprocess.check_output(["python", "algo3a.py", str(x), str(100-x), str(start_nodes[j]) ])
 		y = z.split()
 		if int(y[0])==1 :
