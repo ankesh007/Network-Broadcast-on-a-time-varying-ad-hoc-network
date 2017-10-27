@@ -74,8 +74,24 @@ for k in range(1,100):	# set range(1,100)
 		else:
 			percents.append(float(y[1]))
 
-	file_percent.write(str(k) + ',' + str(np.mean(percents)) + ',' + str(np.std(percents)) + '\n')
-	file_time.write(str(k) + ',' + str(np.mean(times)) + ',' + str(np.std(times)) + '\n')
+	print k,len(times),len(percents)
+	mnp = 0
+	stdp = 0
+	if len(percents)==0:
+		mnp = 0
+	else:
+		mnp = np.mean(percents)
+		stdp = np.std(percents)
+	mnt = 0
+	stdt = 0
+	if len(times)==0:
+		mnt = 0
+	else:
+		mnt = np.mean(times)
+		stdt = np.std(times)
+
+	file_percent.write(str(k) + ',' + str(mnp) + ',' + str(stdp) + '\n')
+	file_time.write(str(k) + ',' + str(mnt) + ',' + str(stdt) + '\n')
 
 
 file_percent.close()
