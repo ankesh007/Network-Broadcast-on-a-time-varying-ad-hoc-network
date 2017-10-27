@@ -3,6 +3,7 @@ import csv
 import sys
 import operator
 import random
+import numpy as np
 
 filename="../proximityedgestimestamps.csv"
 filename2="../modularityclass.csv"
@@ -48,6 +49,7 @@ def main():
 
 	devices={}
 	device_community={}
+	device_broadcast_count={}
 	brodcasted_to=0
 
 	# K=int(sys.argv[1])
@@ -91,6 +93,8 @@ def main():
 			else:
 				devices[device_id1]=DEVICE(device_id1)
 				device_count=device_count+1
+				device_broadcast_count[device_id1]=0
+
 				# print device_community[device_id1]
 
 			if(device_id2 in devices):
@@ -98,6 +102,8 @@ def main():
 			else:
 				devices[device_id2]=DEVICE(device_id2)
 				device_count=device_count+1
+				device_broadcast_count[device_id2]=0
+
 				# print device_community[device_id2]
 
 	
@@ -134,6 +140,7 @@ def main():
 					devices[device_id2].receive_data(chunks[0],devices[device_id1])
 					brodcasted_to=brodcasted_to+1
 					devices[device_id1].to_forward[chunks[0].id]=(chunks[0],chunks[1]+1)
+					device_broadcast_count[device_id1]=device_broadcast_count[device_id1]+1
 
 					if(brodcasted_to>=device_count*percent_check):
 						print "X:",X," Y:",Y," Time:",time_stamp
@@ -156,6 +163,7 @@ def main():
 					devices[device_id1].receive_data(chunks[0],devices[device_id2])
 					brodcasted_to=brodcasted_to+1
 					devices[device_id2].to_forward[chunks[0].id]=(chunks[0],chunks[1]+1)
+					device_broadcast_count[device_id2]=device_broadcast_count[device_id2]+1
 
 					if(brodcasted_to>=device_count*percent_check):
 						print "X:",X," Y:",Y," Time:",time_stamp
@@ -167,6 +175,20 @@ def main():
 
 		if(flag==False):
 			print "X:",X," Y:",Y,",","Reached only(in %):",(brodcasted_to/device_count)*100
+
+	device_broacast_list=[]
+
+	for elements in device_broadcast_count:
+		device_broacast_list.append(device_broadcast_count[elements])
+
+	# print (device_broacast_list)
+
+	np_arr=np.asarray(device_broacast_list)
+
+	pair_wise_diff_sum=np.sum(np.abs(np_arr[:,np.newaxis]-np_arr))
+	linear_sum=np.sum(np_arr)
+
+	print (pair_wise_diff_sum/(2*device_count*(0.00000001+linear_sum)))
 
 
 if __name__=="__main__":
