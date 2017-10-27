@@ -2,28 +2,7 @@ import subprocess
 import random
 import csv
 import numpy as np
-
-
-# For starting device as 26, running for k = 0 to 100
-
-file_percent = open("26_percent.csv",'w')
-file_time = open("26_time.csv",'w')
-
-for j in range(1,100):		# set range(1,100)
-	x = subprocess.check_output(["python", "algo1a.py", str(j), str(26) ])
-	# print x
-	y = x.split()
-	# print y
-	if int(y[0])==1 :
-		file_time.write(str(j) + ',' + y[1] + '\n')
-	else:
-		file_percent.write(str(j) + ',' + y[1] + '\n')
-
-file_percent.close()
-file_time.close()
-# done 1a
-
-# For random sarting points
+import math
 
 devices = set()
 filename="../proximityedgestimestamps.csv"
@@ -42,6 +21,32 @@ with open(filename,'rb') as csvfile:
 
 total = len(devices)
 device_list = list(devices)
+
+# For starting device as 26, running for k = 0 to 100
+
+file_percent = open("26_percent.csv",'w')
+file_time = open("26_time.csv",'w')
+file_nodes_reached = open("26_nodesreached.csv",'w')
+
+for j in range(1,100):		# set range(1,100)
+	x = subprocess.check_output(["python", "algo1a.py", str(j), str(26) ])
+	# print x
+	y = x.split()
+	# print y
+	if int(y[0])==1 :
+		file_time.write(str(j) + ',' + y[1] + '\n')
+		file_nodes_reached.write(str(j) + ',' + str(math.ceil(0.9 * total)) + '\n')
+	else:
+		file_percent.write(str(j) + ',' + y[1] + '\n')
+		file_nodes_reached.write(str(j) + ',' + str(math.ceil(float(y[1])*total*0.01)) + '\n')
+
+file_percent.close()
+file_time.close()
+file_nodes_reached.close()
+# done 1a
+
+# For random sarting points
+
 
 file_percent = open("avg_percent.csv",'w')
 file_time = open("avg_time.csv",'w')
