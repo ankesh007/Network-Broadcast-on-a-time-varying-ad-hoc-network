@@ -1,0 +1,31 @@
+Part 1:
+
+Yes, for node 26, from K=67, there was no improvement of increasing K on broadcast time. The broadcast time remained constant and broadcast completed successfully on each occasion.
+
+There can be possible explanations for the same. 
+
+1. The broadcast might be getting completed before the 67th transfer is made by any node to its neighbour, so any increase in K henceforth would be futile.
+
+2. Devices benefitting from broadcast would have later received the message from some other node, thereby adding no improvements to overall network. Similarly, devices coming in range because of increased K might have already received data from some other node in the ad-hoc network. 
+
+3. The degree cap for the node, that is, unique neighbours a device see is less than 67, for all node in the network. Although this explantion does not fit our trace(max_degree>66), but in general setting this might be an explanation for saturation of broadcast time. 
+
+Fitting linear regression clearly shows the decreasing trend in the graph.
+
+K=49 is the threshold when broadcast starts getting completed. Also, for incomplete broadcast, percent of nodes reached is plotted which clearly shows an increasing trend with K.
+
+This is intuitive as increasing K increases the networks potential to share, and ability of the message to get broadcasted to many other nodes. Linear regression fits also matches with the explanation mentioned.
+
+Number of copies made follows the exact pattern as the percentage graph for values of K causing incomplete broadcast, and thereafter, peaking to fixed value for other K's with value=90% of total nodes(1723).
+
+The graph of mean time for different values of K for 100 random nodes appears interesting. The graph begins from K~50, thereby indicating that for values < 50, broadcast fails to complete for any node in general across the network. 
+
+In general, we expect general broadcast time to go down on increasing K. Some discontinuous rise are clear in the graph. This can be explained as phenomenon, that some nodes which were initially unable to complete broadcast has now the potential to complete broadcast. But, their broadcast time may be higher thereby pushing the overall average higher. 
+
+Note: for calculating time, only those node time are considered who were able to complete broadcast. Shall we always consider all the time, graphs may show a different trend.
+
+Similar patterns were observed for average percentage graph for cases of incomplete broadcast. Slight falls in percentage can be explained because certain nodes with high percentage may just cross threshold to other side, thereby decreasing their contributions.
+
+Also, the curve flattens, thereby showing that changing K does not make any effect on some nodes and explanations are similar with ones mentioned above.
+
+Studying trends for node 26 vs 100 random nodes, we observe that node 26 shows similar trends as the average, for both ranges of K, that is, when it completes/ not complete the broadcast.
