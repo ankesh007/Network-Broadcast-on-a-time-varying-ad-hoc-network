@@ -29,3 +29,5 @@ Similar patterns were observed for average percentage graph for cases of incompl
 Also, the curve flattens, thereby showing that changing K does not make any effect on some nodes and explanations are similar with ones mentioned above.
 
 Studying trends for node 26 vs 100 random nodes, we observe that node 26 shows similar trends as the average, for both ranges of K, that is, when it completes/ not complete the broadcast.
+
+Standard deviations remained quite high for all the readings.

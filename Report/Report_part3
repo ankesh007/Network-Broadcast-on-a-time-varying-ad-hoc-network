@@ -1,0 +1,23 @@
+Modularity measures how well a network decomposes into modular communities/subnetworks. Classes represent tightly knit communities which have a lot more interconnections between their nodes than with nodes in other communities.
+
+Starting broadcast from node 26, we observe that time for broadcast completion remains nearly constant till X=40%, and thereby starts rising, so much so that broadcast fails to complete for transmission probability above ~70%. Insights:
+
+To understand this effect we analyze what a community class is. As mentioned, it represents nodes tightly knitted, hence a node has many of its neighbour in this class. As X increases, transmission probability inside the class starts to fall. As such, expected transmissions inside a community class experiences a plummet.
+
+One may argue that the class might see an increased inter-class communication, but modularity classes are such designed that intra-class communications are much larger, and decreasing intra class transmission rate is decreasing in an expected sense, the potential of the network to transmit. Average number of transmissions go down and graph reflects it.
+
+A linear regression fit shows similar trend.
+
+Former claims are reinforced when we analyze the graph of percent of nodes reached in case of incomplete broadcast. Increasing inter-class communication probability here too, decreases network potential to communicate and transfer data. The fall can be quite fairly modelled by a linear fit as apparent.
+
+Coming to gini co-efficient, we realize that though its value has a very low standard deviation, it has a slight decreasing trend. This falls in line because increasing X is taking away networks potential to transmit, so in a way, its actually decreasing the stress as stress is only generated if we work! So, as X is increased, the intense intra-class communication starts easing and loose inter class communication become prominent. The perpetual high gini coefficient value is because some nodes having large network coverage (strong) as compared to most with only 1 neighbour.
+
+For finding the ideal combinations, different graphs were analyzed. 
+
+The ideal combination appears when X is in range - (25,33) %. Around this value of X, node 26 sees a global minima in broadcast time and giny coefficient is low around the range. Also, when experimented with 100 different nodes, average broadcast time graph showed a global minima in similar range of its wealkly parabolic nature. Average percentage of nodes reached in cases of incomplete broadcasted showed better numbers in this range. Average Giny for 100 nodes also displays a slight plummet in this range.
+
+The average graphs for 100 different nodes test were in tandem with observations for node 26. Ginny was a slight offset, when in average sense falls sharply, showing how important is intra class transmissions in such a disjoint-union class network. 
+
+
+
+
