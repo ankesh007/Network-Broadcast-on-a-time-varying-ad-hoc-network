@@ -8,12 +8,14 @@ The project analyzes an ***ad-hoc*** network run during a four to five day confe
 3. In part 1, each node transmits to the first K ***unique neighbours*** it sights.
 4. The transmission probability space is such that ***x%+y% = 100%***
 
-*Note on directories:*
+*Note on directories and files:*
 
 1. ***doc***: Contains analysis of part 1,2 and 3.
 2. ***Data***: Contains scripts, data, plots for all experiments that was run for the assignment.
 3. ***src***: Contains *raw scripts*. More on execution below.
 4. ***Problem Statement***: Contains 2 files. *Second statement* was attempted.
+5. ***proximityedgetimestamps.csv***: A csv containing the network trace.
+6. ***modularityclass.csv***: A csv containing devices classes obtained using Gephi Software.
 
 *Note on execution of scripts:*
 
@@ -31,8 +33,8 @@ python algo2.py <Top_S%> <Bottom_L%> <Transmission_Prob_to_super_nodes(%)> <Tran
 
 To run script for part 3, type in ***Unix Bash***:
 ```
-python algo3.py <Transmission Prob.(X in %)> <Transmission Porb(Y in %)> <Source_Node>
+python algo3.py <Transmission Prob.(X in %)> <Transmission Prob(Y in %)> <Source_Node>
 ```
 
-
+The ***scripts*** folder in *src/* contains python scripts to run previous scripts 100 times starting from 100 random nodes.
 
