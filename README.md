@@ -8,7 +8,7 @@ The project analyzes an ***ad-hoc*** network run during a four to five day confe
 3. In part 1, each node transmits to the first K ***unique neighbours*** it sights.
 4. The transmission probability space is such that ***x%+y% = 100%***
 
-*Note on directories and files:*
+**Note on directories and files:**
 
 1. ***doc***: Contains analysis of part 1,2 and 3.
 2. ***Data***: Contains scripts, data, plots for all experiments that was run for the assignment.
@@ -17,7 +17,7 @@ The project analyzes an ***ad-hoc*** network run during a four to five day confe
 5. ***proximityedgetimestamps.csv***: A csv containing the network trace.
 6. ***modularityclass.csv***: A csv containing devices classes obtained using Gephi Software.
 
-*Note on execution of scripts:*
+**Note on execution of scripts:**
 
 Change directory to *src/* folder using `cd src`
 
