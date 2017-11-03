@@ -10,9 +10,9 @@ The project analyzes an ***ad-hoc*** network run during a four to five day confe
 
 *Note on directories:*
 
-1. ***doc\/***: Contains analysis of part 1,2 and 3.
-2. ***Data\/***: Contains scripts, data, plots for all experiments that was run for the assignment.
-3. ***src\/***: Contains *raw scripts*. More on execution below.
+1. ***doc***: Contains analysis of part 1,2 and 3.
+2. ***Data***: Contains scripts, data, plots for all experiments that was run for the assignment.
+3. ***src***: Contains *raw scripts*. More on execution below.
 4. ***Problem Statement***: Contains 2 files. *Second statement* was attempted.
 
 *Note on execution of scripts:*
