@@ -1,0 +1,7 @@
+On comparing across methods, we observe that part 2 combinations with low S(0.5%) and high L(85-90%) were ideal, with high transmission probability, as because gini co-efficient and time, both were at minimum. On contrast, we couldn't find such clear balance between the 2 in 3rd part.
+
+In 3rd case, as gini co-efficient seems to plummet, time to broadcast see a sharp rise, and ideal combination occurs somewhere midway the 2. The equilibrium ideal points combination is not as clean as in 2nd case where one find system minimum gini and time for nearly same values.
+
+Comparing with first method makes little sense as the first one is deterministic whereas the other two are probabilistic.
+
+Also, keeping a same cut value K for each node is not fair as some node never reach such a threshold, whereas others might easily exceed it. Rather introducing a notion of probability in a sense, introduces individual k, which seems more realistic in long run.
